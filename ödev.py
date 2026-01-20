@@ -1,38 +1,32 @@
+# print ifadesi kullanıcının gördüğü ekranda bir şey yazmasını istediğimizde kullanılır
 print("Hesap Makinesi")
 print("Çıkmak için 'exit' yaz")
+print("Örnekler: 2+3+9 , (2+6)*4 , 2**3 , 10-(2+3)")
 
+# while True işlemde hata olmadığı sürece işlemin sürekli devamını sağlar
 while True:
-    islem = input("İşlemi gir (örnek: 3+4): ")
-
-    if islem.lower() == "exit":
+    islem = input("İşlemi gir: ")
+    
+    # Çıkış kontrolü (boşluk ve büyük-küçük harf fark etmez)
+    if islem.strip().lower() == "exit":
         print("Program sonlandırıldı.")
         break
 
     try:
-        if "+" in islem:
-            a, b = islem.split("+")
-            sonuc = float(a) + float(b)
+        # Burası işlemde yalnızca matematiksel ifadelerin kullanılmasına izin verildiğini gösterir
+        izinli_karakterler = "0123456789+-*/(). "
+        for k in islem:
+            if k not in izinli_karakterler:
+                raise ValueError
 
-        elif "-" in islem:
-            a, b = islem.split("-")
-            sonuc = float(a) - float(b)
-
-        elif "*" in islem:
-            a, b = islem.split("*")
-            sonuc = float(a) * float(b)
-
-        elif "/" in islem:
-            a, b = islem.split("/")
-            if float(b) == 0:
-                print("Hata: 0'a bölme yapılamaz!")
-                continue
-            sonuc = float(a) / float(b)
-
-        else:
-            print("Hata: Sadece +, -, *, / işlemleri yapılabilir.")
-            continue
-
+        sonuc = eval(islem)
         print("Sonuç:", sonuc)
 
+    except ZeroDivisionError:
+        print("Hata: 0'a bölme yapılamaz!")
+
     except:
-        print("Hatalı giriş! Lütfen 3+4 gibi bir işlem gir.")
+        print("Hatalı giriş! Geçerli bir matematiksel ifade gir.")
+
+
+ 
